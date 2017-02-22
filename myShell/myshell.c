@@ -14,6 +14,7 @@
 #include <string.h>
 #include "utility.h"
 #include "myshell.h"
+ #include <sys/stat.h>
 
 using namespace std;
 
@@ -30,9 +31,8 @@ int main(int argc, char *argv[])
     // Input buffer and and commands
     char buffer[BUFFER_LEN] = { 0 };
     char command[BUFFER_LEN] = { 0 };
-    char arg[BUFFER_LEN] = { 0 };
-
-    char PWD[BUFFER_LEN] = { 0 }; 
+    char arg[BUFFER_LEN] = {};  
+    char PWD[BUFFER_LEN]; 
 
  
     // if (getcwd(PWD, sizeof(PWD)) != NULL)
@@ -48,17 +48,19 @@ int main(int argc, char *argv[])
     DIR *d = opendir(arg);
     struct dirent *dir;
     int i = 1;
-    char *strings = *environ;            
+    char *strings = *environ;  
+    struct stat st;          
 
     // Perform an infinite loop getting command input from users
     while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
     {
-        printf("%s\n", buffer);
+        //printf("%s\n", buffer);
 
         //removing new line character
+
         if(buffer[strlen(buffer)-1] == '\n'){
             buffer[strlen(buffer)-1] = '\0';
-        }
+        }       
 
         //putting first input into command
         token = strtok(buffer, s);
@@ -70,18 +72,36 @@ int main(int argc, char *argv[])
             strcpy(arg, token);
         }
         
-        printf("Command: %s\n", command);
-        printf("Arg: %s\n", arg);
-
+        //printf("Command: %s\n", command);
+        //printf("Arg: %s\n", arg);
 
         // Perform string tokenization to get the command and argument
 
         // Check the command and execute the operations for each command
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
-        {
-           chdir(arg);  
-           PWD = *getcwd(arg, sizeof(arg));   
+        {  
+            //if directory inputted does not exist
+            if(stat(arg,&st) != 0){
+                printf("Error: The directory does not exist.\n");
+            //else change directory and update PWD
+            }else{
+                chdir(arg);
+                getcwd(PWD, sizeof(arg));
+            }
+
+            //if arguement not given, print working directory
+            if(strlen(arg) == 0){
+                printf("%s\n",PWD);
+            }
+
+            //resetting arg so "cd" works is used multiple times
+            arg[0] = 0;                         
+        }
+
+        // other commands here...
+        else if (strcmp(command, "pwd") == 0){
+            system("pwd");
         }
 
         // other commands here...
@@ -111,7 +131,15 @@ int main(int argc, char *argv[])
         }
 
         else if (strcmp(command, "help") == 0){
-            
+            printf("Commands:\n"
+                "cd <directory> - Change the current default directory to <directory>\n"
+                "clr - Clear the screen\n"
+                "dir <directory> - List the contents of directory <directory>\n"
+                "environ - List all the environment strings\n"
+                "echo <comment> - Display <comment> on the display followed by a new line\n"
+                "help - Display the user manual using the more filter\n"
+                "pause - Pause operation of the shell until 'Enter' is pressed\n"
+                "quit - Quit the shell");
         }
 
         else if (strcmp(command, "pause") == 0){
