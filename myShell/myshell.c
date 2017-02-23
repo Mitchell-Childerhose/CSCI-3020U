@@ -5,7 +5,6 @@
  * All rights reserved.
  * 
  */
-#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -15,8 +14,6 @@
 #include "utility.h"
 #include "myshell.h"
  #include <sys/stat.h>
-
-using namespace std;
 
 // Put macros or constants here using #define
 #define BUFFER_LEN 256
@@ -44,7 +41,6 @@ int main(int argc, char *argv[])
     // Parse the commands provided using argc and arg
     const char s[2] = " ";
     char *token;
-
     
     int i = 1;
     char *strings = *environ;  
@@ -157,9 +153,22 @@ int main(int argc, char *argv[])
         }
 
         else if (strcmp(command, "pause") == 0){
-            cin.get();
+            getchar(); 
             printf("%s$ ",PWD);
-        }        
+        }   
+
+        else if (strcmp(command, "myshell") == 0){
+            FILE *file = fopen (arg, "r" );
+            if(file != NULL)
+            {
+                char line [128];
+                while(fgets(line, sizeof line, file) != NULL) 
+                {
+                    fputs (line, stdout);
+                }
+                fclose (file);
+            }
+        }      
         
         // quit command -- exit the shell
         else if (strcmp(command, "quit") == 0)
