@@ -45,17 +45,17 @@ int main(int argc, char *argv[])
     const char s[2] = " ";
     char *token;
 
-    DIR *d = opendir(arg);
-    struct dirent *dir;
+    
     int i = 1;
     char *strings = *environ;  
-    struct stat st;          
+    struct stat st;    
+
+    getcwd(PWD, sizeof(arg));
+    printf("%s$ ",PWD);      
 
     // Perform an infinite loop getting command input from users
     while (fgets(buffer, BUFFER_LEN, stdin) != NULL)
     {
-        //printf("%s\n", buffer);
-
         //removing new line character
 
         if(buffer[strlen(buffer)-1] == '\n'){
@@ -81,19 +81,24 @@ int main(int argc, char *argv[])
         // cd command -- change the current directory
         if (strcmp(command, "cd") == 0)
         {  
-            //if directory inputted does not exist
-            if(stat(arg,&st) != 0){
-                printf("Error: The directory does not exist.\n");
-            //else change directory and update PWD
-            }else{
-                chdir(arg);
-                getcwd(PWD, sizeof(arg));
+            if(strlen(arg) != 0){
+                //if directory inputted does not exist
+                if(stat(arg,&st) != 0){
+                    printf("Error: The directory does not exist.\n");
+                    printf("%s$ ",PWD);
+                //else change directory and update PWD
+                }else{
+                    chdir(arg);
+                    getcwd(PWD, sizeof(arg));
+                    printf("%s$ ",PWD);
+                }
+            }
+            //if arguement not given, print working directory
+            else{
+                printf("%s$ ",PWD);
             }
 
-            //if arguement not given, print working directory
-            if(strlen(arg) == 0){
-                printf("%s\n",PWD);
-            }
+            //printf("%s",PWD);
 
             //resetting arg so "cd" works is used multiple times
             arg[0] = 0;                         
@@ -106,10 +111,14 @@ int main(int argc, char *argv[])
 
         // other commands here...
         else if (strcmp(command, "clr") == 0){
-            system("clear");
+            printf("\033[2J\033[1;1H");
+            printf("%s$ ",PWD);
         }
 
         else if (strcmp(command, "dir") == 0){
+            DIR *d = opendir(arg);
+            struct dirent *dir;
+
             if (d){
                 while ((dir = readdir(d)) != NULL){
                     printf("%s\n", dir->d_name);
@@ -117,6 +126,7 @@ int main(int argc, char *argv[])
 
                 closedir(d);
             }
+            printf("%s$ ",PWD);
         }
 
         else if (strcmp(command, "environ") == 0){
@@ -124,10 +134,13 @@ int main(int argc, char *argv[])
                 printf("%s\n", strings);
                 strings = *(environ+i);
             }
+            printf("%s$ ",PWD);
+
         }
 
         else if (strcmp(command, "echo") == 0){
             printf("%s\n", arg);
+            printf("%s$ ",PWD);
         }
 
         else if (strcmp(command, "help") == 0){
@@ -139,11 +152,13 @@ int main(int argc, char *argv[])
                 "echo <comment> - Display <comment> on the display followed by a new line\n"
                 "help - Display the user manual using the more filter\n"
                 "pause - Pause operation of the shell until 'Enter' is pressed\n"
-                "quit - Quit the shell");
+                "quit - Quit the shell\n");
+            printf("%s$ ",PWD);
         }
 
         else if (strcmp(command, "pause") == 0){
             cin.get();
+            printf("%s$ ",PWD);
         }        
         
         // quit command -- exit the shell
