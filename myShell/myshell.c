@@ -58,12 +58,11 @@ int main(int argc, char *argv[])
     // Perform an infinite loop getting command input from users
     while (fgets(buffer, BUFFER_LEN, stream) != NULL)
     {
-        printf("%s", buffer);
+        //printf("%s", buffer);
         //removing new line character
 
-        if(buffer[strlen(buffer)] == '\n'){
-            printf("***replace***");
-            buffer[strlen(buffer)] = '\0';
+        if(buffer[strlen(buffer)-1] == '\n'){
+            buffer[strlen(buffer)-1] = '\0';
         }       
 
         //putting first input into command
@@ -165,20 +164,7 @@ int main(int argc, char *argv[])
         else if (strcmp(command, "pause") == 0){
             getchar(); 
             printf("%s$ ",PWD);
-        }   
-
-        // else if (strcmp(command, "myshell") == 0){
-        //     FILE *file = fopen (arg, "r" );
-        //     if(file != NULL)
-        //     {
-        //         char line [128];
-        //         while(fgets(line, sizeof line, file) != NULL) 
-        //         {
-        //             fputs (line, stdout);
-        //         }
-        //         fclose (file);
-        //     }
-        // }      
+        }         
         
         // quit command -- exit the shell
         else if (strcmp(command, "quit") == 0)
