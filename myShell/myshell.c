@@ -95,12 +95,12 @@ int main(int argc, char *argv[])
                 }else{
                     chdir(arg);
                     getcwd(PWD, sizeof(arg));
-                    printf("%s$ ",PWD);
+                    printf("%s$ \n",PWD);
                 }
             }
             //if arguement not given, print working directory
             else{
-                printf("%s$ ",PWD);
+                printf("%s$ \n",PWD);
             }
 
             //printf("%s",PWD);
