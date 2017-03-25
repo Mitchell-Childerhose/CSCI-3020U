@@ -49,35 +49,22 @@ Design Document
 
 
 
+
+
+
+
+
 Kevin Lovell (100559665)
-Mitchell Childerhose (100553756)
+Mitchell Childerhose (100553756)30
 March 13th, 2016
 
 1. a
 
      To solve the issue of memory storage allocation we could use one of several algorithms. First-fit would allocate memory to the first available hole in memory. Best-fit is a another algorithm that would allocate memory to the smallest available hole that can fit the given data, but leave the smallest possible leftover holes. This requires searching the entire memory block every time new data is stored. In contrast Worst-fit is an algorithm that would allocate memory to the largest available hole and produce the largest leftover holes for more data. This would also require searching the entire block when new data is stored. For this lab we will use the first-fit algorithm for its simplicity and its faster search times.
 
-
-
-
-
-
-
-
-
-
-
-
-
 1. b 
 
      This dispatcher uses the Round Robin approach to dispatching and queueing. Each process is assigned a fixed time by the scheduler to be completed. The process gets terminated if it completes within the time frame it is allocated. If the process does no complete within the time frame, it is rescheduled to be executed after all the other processes are given a chance to run. Round robin makes use of the Shortest Job First(SJF) and First In First Out(FIFO) paradigms for scheduling. No priority is given to each process, therefore, starvation cannot occur. The process arrival time dictate the order that the time units are allocated in.
-
-
-
-
-
-
 
      The data structure used to implement the round robin algorithm is a simple circular linked list. Each node represent and process and points to the next node. This allows the dispatcher to cycle through each of the process and give each of them a slice of time to execute. This is convenient for the OS as it can loop back the beginning of the linked list (or queue) after each process has been given its time to run.
 
@@ -105,13 +92,6 @@ It contains comma separated values, for example:
 
     
      It adds each process instance to the job dispatch list queue, iterates through each item in the list, and adds each process to the appropriate queue. Then it allocates the resources available to each process and executes them in sequential order using the fork() and exec() commands. The resources are allocated using the First Fit algorithm assign memory space to each process. It iterates through the linked list until all the processes have been fully executed and the queue us empty.
-
-
-
-
-
-
-
 
 1. d 
 
