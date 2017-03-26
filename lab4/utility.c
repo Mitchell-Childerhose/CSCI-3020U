@@ -11,8 +11,34 @@
 
 // Define your utility functions here, you will likely need to add more...
 
-int alloc_mem(resources res, int size){
+int alloc_mem(resources res, int size, int Mbytes){
+	int allocated;
 
+	if(priority==0){
+		loc=0;
+	}else{
+		loc=64;
+	}
+
+	bool check = 1;
+
+	//loop through memory
+	for(int i = allocated ; i < allocated + size; i++){
+		if(res->memory[i] == 1){
+			check = 0;
+			allocated = i;
+			break;
+		}
+	}
+	    
+	//allocated the memory that is found
+	if(check = 1){
+		for(int i = allocated; i < allocated + size; i++){
+			res->memory[x]=1;
+		}
+		return allocated;
+
+	}
 }
 
 void free_mem(resources res, int address_index, int size){
