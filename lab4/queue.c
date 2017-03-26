@@ -20,8 +20,8 @@ void *push(node_t *tail, proc process){
 	}
 
 	current->next = malloc(sizeof(node_t));
-    current->next->process = process;
-    current->next->next = NULL;
+	current->next->process = process;
+	current->next->next = NULL;
 }
 
 proc *pop(node_t *tail, proc process){
