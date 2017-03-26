@@ -25,16 +25,16 @@ void *push(node_t *tail, proc process){
 }
 
 proc *pop(node_t *tail, proc process){
-    node_t * next_node = NULL;
+	node_t * next_node = NULL;
 
-    if (*tail->next == NULL) {
-        return NULL;
-    }
+	if (*tail->next == NULL) {
+		return NULL;
+		}
 
-    //might need to do ->next->next
-    next_node = (*tail)->next;
-    process = next_node->process;
-    free(*tail);
-    *tail = next_node;
-    return &process;
+	//might need to do ->next->next
+	next_node = (*tail)->next;
+	process = next_node->process;
+	free(*tail);
+	*tail = next_node;
+	return &process;
 }
