@@ -37,13 +37,13 @@ void load_dispatch(char *dispatch_file, node_t *queue){
 		char line[30];
 		//read line by line
 		while(fgets(line, sizeof line, file) != NULL){
-            token = strtok(line, comma);
-            for(i = 0; i < 8; i++){
-                array[i] = atoi(token);
-                token = strtok(NULL, comma);
-            }
-        }
-        fclose(file);
+        	token = strtok(line, comma);
+        	for(i = 0; i < 8; i++){
+            	array[i] = atoi(token);
+            	token = strtok(NULL, comma);
+			}
+		}
+    	fclose(file);
 	}else{
 		printf("Error reading file.")
 	}
@@ -76,18 +76,18 @@ void free_res(resources* res, proc process){
 	}
 
 	int num = process.printers;
-  	for(int i = 0; i < 2; i++){
-    	if(num == 0) break;
-    	if(res->printers[i] == 1){
-      		res->printers[i] = 0;
-    	}
+	for(int i = 0; i < 2; i++){
+		if(num == 0) break;
+		if(res->printers[i] == 1){
+			res->printers[i] = 0;
+		}
 	}
 
 	num = process.cds;
-  	for(int i = 0; i < 2; i++){
-    	if(num == 0) break;
-    	if(res->cds[i] == 1){
-      		res->cds[i] = 0;
-    	}
+	for(int i = 0; i < 2; i++){
+		if(num == 0) break;
+		if(res->cds[i] == 1){
+			res->cds[i] = 0;
+		}
 	}
 }
