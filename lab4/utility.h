@@ -23,9 +23,9 @@ typedef struct{
 // where in the resources memory array its memory was allocated
 typedef struct{
 	int arrival_time, priority, processor_time, printers[2],
-	scanners, modems, cds[2][2], address_index, pid;
+scanners, modems, cds[2], address_index, pid;
 	int Mbytes[1024];
-	bool suspended;
+	int suspended;
 } process;
 
 // Include your relevant functions declarations here they must start with the 
@@ -43,11 +43,11 @@ extern void free_mem(resources res, int address_index, int size);
 
 // Function to parse the file and initialize each process structure and add
 // it to your job dispatch list queue (linked list)
-extern void load_dispatch(char *dispatch_file, node_t *queue);
+extern void load_dispatch(char *dispatch_file);
 
 //allocate resources
-extern int alloc_res(resources* res, proc* process);
+extern int alloc_res(resources* res, process* proc);
 //free resources
-extern void free_res(resources* res, proc process);
+extern void free_res(resources* res, process proc);
 
 #endif /* UTILITY_H_ */

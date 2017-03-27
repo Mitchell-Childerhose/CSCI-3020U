@@ -14,13 +14,7 @@
 int alloc_mem(resources res, int size, int Mbytes){
 	int allocated;
 
-	if(priority==0){
-		loc=0;
-	}else{
-		loc=64;
-	}
-
-	bool check = 1;
+	int check = 1;
 
 	//loop through memory
 	for(int i = allocated ; i < allocated + size; i++){
@@ -49,7 +43,7 @@ void free_mem(resources res, int address_index, int size){
 
 // Function to parse the file and initialize each process structure and add
 // it to your job dispatch list queue (linked list)
-void load_dispatch(char *dispatch_file, node_t *queue){	
+void load_dispatch(char *dispatch_file){	
 	FILE *file;
 	file = fopen(dispatch_file, "r");	
 	char* comma = ", ";
@@ -74,24 +68,24 @@ void load_dispatch(char *dispatch_file, node_t *queue){
 		printf("Error reading file.")
 	}
 
-	proc created_process = (proc){.arrival_time = array[0], .priority = array[1],
+	process created_process = (process){.arrival_time = array[0], .priority = array[1],
 		.processor_time = array[2], .Mbytes = array[3],.printers = array[4],
 		.scanners = array[5], .modems = array[6], .cds = array[7],
-		.address_index = 0, .suspended = false};
+		.address_index = 0, .suspended = 0};
 
 	//push to process onto the queue
 	//push(node_t, created_process);
 }
 
 //allocate resources
-int alloc_res(resources* res, proc* process){
+int alloc_res(resources* res, process* proc){
 
 }
 
 //free resources
-void free_res(resources* res, proc process){
+void free_res(resources* res, process proc){
 
-	free_mem(res, process.address_index, process.Mbytes);
+	free_mem(res, proc.address_index, proc.Mbytes);
 
 	if(res->scanners == 1){
 		res->scanners = 0;
@@ -101,7 +95,7 @@ void free_res(resources* res, proc process){
 		res->modems = 0;
 	}
 
-	int num = process.printers;
+	int num = proc.printers;
 	for(int i = 0; i < 2; i++){
 		if(num == 0) break;
 		if(res->printers[i] == 1){
@@ -109,7 +103,7 @@ void free_res(resources* res, proc process){
 		}
 	}
 
-	num = process.cds;
+	num = proc.cds;
 	for(int i = 0; i < 2; i++){
 		if(num == 0) break;
 		if(res->cds[i] == 1){

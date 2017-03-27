@@ -13,8 +13,8 @@
 //Your linked list structure for your queue
 typedef struct node{
 	struct node* next;
-	proc process;
-} node_t; 
+	process proc;
+} node_t;
 
 // Include your relevant FIFO queue functions declarations here they must start 
 // with the extern keyword such as in the following examples:
@@ -22,7 +22,7 @@ typedef struct node{
 // Add a new process to the queue, returns the address of the next node added
 // to the linked list
 
-extern void *push(node_t *tail, proc process);
-extern proc *pop(node_t *tail, proc process);
+extern void *push(node_t *tail, process proc);
+extern process *pop(node_t *tail, process proc);
 
 #endif /* QUEUE_H_ */
