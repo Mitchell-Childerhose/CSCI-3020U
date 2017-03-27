@@ -33,23 +33,27 @@ int need[NUM_CUSTOMERS][NUM_RESOURCES];
 
 
 // Define functions declared in banker.h here
-// bool request_res(int n_customer, int request[])
-// {
-//      ...
-// }
+bool request_res(int n_customer, int request[]){
+}
 
 // Release resources, returns true if successful
-// bool release_res(int n_customer, int release[])
-// {
-//      ...
-// }
+bool release_res(int n_customer, int release[]){
+}
 
 
 int main(int argc, char *argv[])
 {
     // ==================== YOUR CODE HERE ==================== //
 
-    // Read in arguments from CLI, NUM_RESOURCES is the number of arguments   
+    // Read in arguments from CLI, NUM_RESOURCES is the number of arguments
+    available[0] = atoi(argv[1]);
+    available[1] = atoi(argv[2]);   
+    available[2] = atoi(argv[3]);  
+
+    for (int i = 0; i < 3; i++){
+        printf("%d \n", available[i]);
+    }
+
     
     // Allocate the available resources
 
